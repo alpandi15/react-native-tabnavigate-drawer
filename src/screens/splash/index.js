@@ -5,7 +5,7 @@ const SplashScreen = ({navigation}) => {
   React.useEffect(() => {
     setTimeout(() => {
       navigation.replace('HomeApp');
-    }, 1000);
+    }, 800);
   }, [navigation]);
 
   return (
