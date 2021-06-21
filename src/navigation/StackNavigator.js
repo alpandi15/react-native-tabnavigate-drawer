@@ -4,7 +4,7 @@ import BottomTabNavigator from './TabNavigator';
 import About from '../screens/About';
 import Contact from '../screens/Contact';
 import Variasi from '../screens/Variasi';
-import SplashScreen from '../screens/splash';
+import ForgotPassword from '../screens/auth/ForgotPassword';
 import LoginScreen from '../screens/auth/Login';
 
 const Stack = createStackNavigator();
@@ -16,6 +16,10 @@ const screenOptionStyle = {
   headerTintColor: 'white',
   headerBackTitle: 'Back',
 };
+
+const navOptionHandler = () => ({
+  headerShown: false,
+});
 
 const ContactStack = () => {
   return (
@@ -35,25 +39,22 @@ const VariasiStack = () => {
   );
 };
 
-const LoadingStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="SplashScreen" component={SplashScreen} />
-    </Stack.Navigator>
-  );
-};
-
 const LoginStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={navOptionHandler}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPassword}
+        options={navOptionHandler}
+      />
     </Stack.Navigator>
   );
 };
-
-const navOptionHandler = () => ({
-  headerShown: false,
-});
 const MainStack = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
@@ -67,4 +68,4 @@ const MainStack = () => {
   );
 };
 
-export {LoadingStack, LoginStack, MainStack, ContactStack, VariasiStack};
+export {LoginStack, MainStack, ContactStack, VariasiStack};

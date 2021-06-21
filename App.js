@@ -5,6 +5,7 @@ import DrawerNavigator from './src/navigation/DrawerNavigator';
 // import TabNavigator from './src/navigation/TabNavigator';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoadingScreen from './src/screens/splash';
+import {LoginStack} from './src/navigation/StackNavigator';
 
 const navOptionHandler = () => ({
   headerShown: false,
@@ -23,6 +24,11 @@ const App = () => {
           <StackApp.Screen
             name="Loading"
             component={LoadingScreen}
+            options={navOptionHandler}
+          />
+          <StackApp.Screen
+            name="LoginStack"
+            component={LoginStack}
             options={navOptionHandler}
           />
         </StackApp.Navigator>

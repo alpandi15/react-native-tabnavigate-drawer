@@ -55,7 +55,8 @@ const CustomDrawerContent = props => {
         />
         <UserContent>
           <TextName>Stand User</TextName>
-          <ButtonLogout>
+          <ButtonLogout
+            onPress={() => props?.navigation?.replace('LoginStack')}>
             <TextLogout>Keluar</TextLogout>
             <Icon size={20} type="material" name="logout" color="#fb770d" />
           </ButtonLogout>
