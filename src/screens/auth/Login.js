@@ -3,6 +3,7 @@ import {View, StyleSheet, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Input, Button, Image} from 'react-native-elements';
 import {Controller, useForm} from 'react-hook-form';
+import InputField from '../../components/form/Input';
 
 const Login = ({navigation}) => {
   const {
@@ -29,26 +30,24 @@ const Login = ({navigation}) => {
 
       <View style={styles.formContent}>
         <View style={styles.inputControl}>
-          <Controller
+          <InputField
             name="account"
             control={control}
-            rules={{
-              required: true,
+            placeholder="Email / Username"
+            validation={{
+              required: '*Account Required',
             }}
-            render={({field: {onChange, onBlur, value}}) => (
-              <Input
-                placeholder="Email / Username"
-                onChangeText={onChange}
-                style={styles.inputStyle}
-                onBlur={onBlur}
-                value={value}
-              />
-            )}
+            secureTextEntry={true}
+            error={errors?.account}
           />
-          {errors.firstName && <Text>This is required.</Text>}
-          <Input
+          <InputField
+            name="password"
+            control={control}
             placeholder="Password"
-            style={styles.inputStyle}
+            validation={{
+              required: '*Password Required',
+            }}
+            error={errors?.account}
             secureTextEntry={true}
           />
         </View>
