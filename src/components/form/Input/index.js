@@ -30,7 +30,7 @@ const InputField = ({
           />
         )}
       />
-      <View style={styles.errorWrapper}>
+      <View style={styles.errorWrapper} pointerEvents="none">
         {error && <Text style={styles.textError}>{error?.message}</Text>}
       </View>
     </View>

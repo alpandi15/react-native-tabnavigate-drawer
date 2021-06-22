@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Input, Button, Image} from 'react-native-elements';
-import {Controller, useForm} from 'react-hook-form';
+import {Button, Image} from 'react-native-elements';
+import {useForm} from 'react-hook-form';
 import InputField from '../../components/form/Input';
 
 const Login = ({navigation}) => {
@@ -37,7 +37,6 @@ const Login = ({navigation}) => {
             validation={{
               required: '*Account Required',
             }}
-            secureTextEntry={true}
             error={errors?.account}
           />
           <InputField
