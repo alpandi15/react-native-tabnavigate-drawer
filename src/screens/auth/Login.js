@@ -2,8 +2,15 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Input, Button, Image} from 'react-native-elements';
+import {Controller, useForm} from 'react-hook-form';
 
 const Login = ({navigation}) => {
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm();
+  const onSubmit = data => console.log(data);
   return (
     <View style={styles.wrapper}>
       <View style={styles.content}>
@@ -22,7 +29,23 @@ const Login = ({navigation}) => {
 
       <View style={styles.formContent}>
         <View style={styles.inputControl}>
-          <Input placeholder="Email / Username" style={styles.inputStyle} />
+          <Controller
+            name="account"
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({field: {onChange, onBlur, value}}) => (
+              <Input
+                placeholder="Email / Username"
+                onChangeText={onChange}
+                style={styles.inputStyle}
+                onBlur={onBlur}
+                value={value}
+              />
+            )}
+          />
+          {errors.firstName && <Text>This is required.</Text>}
           <Input
             placeholder="Password"
             style={styles.inputStyle}
@@ -31,7 +54,7 @@ const Login = ({navigation}) => {
         </View>
         <View style={styles.buttonContent}>
           <Button
-            onPress={() => navigation.replace('HomeApp')}
+            onPress={handleSubmit(onSubmit)}
             title="Masuk"
             loading={false}
             buttonStyle={styles.buttonStyle}
