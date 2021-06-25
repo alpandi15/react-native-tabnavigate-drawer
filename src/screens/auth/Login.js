@@ -46,7 +46,7 @@ const Login = ({navigation}) => {
             validation={{
               required: '*Password Required',
             }}
-            error={errors?.account}
+            error={errors?.password}
             secureTextEntry={true}
           />
         </View>
