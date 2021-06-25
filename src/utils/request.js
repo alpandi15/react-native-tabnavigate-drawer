@@ -16,7 +16,7 @@ const request = async ({
 }) => {
   const useUrl = fullUrl ? url : `${APIURL}${url}`;
   const token = await getUserToken();
-
+  console.log('API URL ', useUrl);
   switch (type) {
     case 'json': {
       headers = {

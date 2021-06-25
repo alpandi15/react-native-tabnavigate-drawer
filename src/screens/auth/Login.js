@@ -4,14 +4,22 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Image} from 'react-native-elements';
 import {useForm} from 'react-hook-form';
 import InputField from '../../components/form/Input';
+import {apiLogin} from '../../services/auth';
 
 const Login = ({navigation}) => {
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: {errors, isSubmitting},
   } = useForm();
-  const onSubmit = data => console.log(data);
+  const onSubmit = async values => {
+    const res = await apiLogin({
+      username: values?.account,
+      password: values?.password,
+    });
+    console.log('REsponse ', res);
+  };
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.content}>
@@ -54,9 +62,10 @@ const Login = ({navigation}) => {
           <Button
             onPress={handleSubmit(onSubmit)}
             title="Masuk"
-            loading={false}
+            loading={isSubmitting}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitle}
+            disabled={isSubmitting}
           />
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgotPassword')}

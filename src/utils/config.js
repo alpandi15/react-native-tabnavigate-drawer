@@ -1,10 +1,4 @@
-import {
-  API_DEBUG,
-  API_PROTOCOL,
-  API_HOST,
-  API_PORT,
-  API_VERSION,
-} from 'react-native-dotenv';
+import {API_DEBUG, API_PROTOCOL, API_HOST, API_PORT, API_VERSION} from '@env';
 
 export const debug = API_DEBUG;
 export const APIPROTOCOL = API_PROTOCOL;
