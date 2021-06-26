@@ -6,6 +6,12 @@
     "android": "react-native run-android && yarn start",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "ios-bundle": "react-native bundle --dev false --entry-file index.js --bundle-output ios/main.jsbundle --platform ios",
+    "ios-build": "react-native run-ios --configuration Release",
+    "android-clean": "cd android && ./gradlew clean",
+    "android-build-debug": "cd android/ && ./gradlew assembleDebug",
+    "android-release": "cd android && ./gradlew assembleRelease --no-daemon",
+
     "test": "jest",
     "lint": "eslint ."
   },
