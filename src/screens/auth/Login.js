@@ -5,6 +5,7 @@ import {Button, Image} from 'react-native-elements';
 import {useForm} from 'react-hook-form';
 import InputField from '../../components/form/Input';
 import {apiLogin} from '../../services/auth';
+import {setUserToken} from '../../utils/storage';
 
 const Login = ({navigation}) => {
   const {
@@ -17,7 +18,11 @@ const Login = ({navigation}) => {
       username: values?.account,
       password: values?.password,
     });
-    console.log('REsponse ', res);
+    if (res?.success) {
+      await setUserToken(JSON.stringify(res?.data?.access_token));
+      navigation.replace('HomeApp');
+    }
+    console.log('REsponse ', JSON.stringify(res?.data?.access_token));
   };
 
   return (

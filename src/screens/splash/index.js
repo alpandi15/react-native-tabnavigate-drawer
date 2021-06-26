@@ -1,11 +1,20 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
+import {getUserToken} from '../../utils/storage';
 
 const SplashScreen = ({navigation}) => {
   React.useEffect(() => {
-    setTimeout(() => {
-      navigation.replace('LoginStack');
-    }, 800);
+    (async () => {
+      const token = await getUserToken();
+      console.log('TOKEN ', token);
+      if (token) {
+        navigation.replace('HomeApp');
+      } else {
+        navigation.replace('LoginStack');
+      }
+    })();
+    // setTimeout(() => {
+    // }, 800);
   }, [navigation]);
 
   return (

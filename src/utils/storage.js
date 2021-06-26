@@ -1,9 +1,32 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getUserToken = async () => {
-  let data = await AsyncStorage.getItem('userToken');
-  const parsed = JSON.parse(data) || null;
-  return parsed;
+  try {
+    let data = await AsyncStorage.getItem('userToken');
+    const parsed = JSON.parse(data) || null;
+    return parsed;
+  } catch (error) {
+    console.log('Error :>> ', error);
+  }
+};
+
+const setUserToken = async token => {
+  try {
+    let data = await AsyncStorage.setItem('userToken', token);
+    const parsed = JSON.parse(data) || null;
+    return parsed;
+  } catch (error) {
+    console.log('Error :>> ', error);
+  }
+};
+
+const removeUserToken = async () => {
+  try {
+    let removed = await AsyncStorage.removeItem('userToken');
+    return removed;
+  } catch (error) {
+    console.log('Error :>> ', error);
+  }
 };
 
 const get = async key => {
@@ -33,4 +56,4 @@ const remove = async key => {
   }
 };
 
-export {getUserToken, get, set, remove};
+export {getUserToken, setUserToken, removeUserToken, get, set, remove};

@@ -2,6 +2,7 @@ import React from 'react';
 import {Icon, Image} from 'react-native-elements';
 import {ScrollView, Text} from 'react-native';
 import styled from 'styled-components/native';
+import {removeUserToken} from '../../utils/storage';
 const styles = {
   userImage: {
     width: 50,
@@ -12,6 +13,14 @@ const styles = {
 };
 
 const CustomDrawerContent = props => {
+  const logout = async () => {
+    const removeToken = await removeUserToken();
+    console.log('LOGOUT ', removeToken);
+    props?.navigation?.replace('LoginStack');
+    if (removeToken) {
+    }
+  };
+
   return (
     <Wrapper>
       <SideHeader>
@@ -55,8 +64,7 @@ const CustomDrawerContent = props => {
         />
         <UserContent>
           <TextName>Stand User</TextName>
-          <ButtonLogout
-            onPress={() => props?.navigation?.replace('LoginStack')}>
+          <ButtonLogout onPress={logout}>
             <TextLogout>Keluar</TextLogout>
             <Icon size={20} type="material" name="logout" color="#fb770d" />
           </ButtonLogout>
