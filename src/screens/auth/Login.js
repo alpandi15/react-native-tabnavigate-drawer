@@ -6,6 +6,7 @@ import {useForm} from 'react-hook-form';
 import InputField from '../../components/form/Input';
 import {apiLogin} from '../../services/auth';
 import {setUserToken} from '../../utils/storage';
+import Toast from '../../components/toast/ToastAndroid';
 
 const Login = ({navigation}) => {
   const {
@@ -20,8 +21,16 @@ const Login = ({navigation}) => {
     });
     if (res?.success) {
       await setUserToken(JSON.stringify(res?.data?.access_token));
+      Toast({
+        message: res?.meta?.message,
+      });
       navigation.replace('HomeApp');
+      return;
     }
+    Toast({
+      message: res?.detail || res?.message,
+    });
+
     console.log('REsponse ', JSON.stringify(res?.data?.access_token));
   };
 
