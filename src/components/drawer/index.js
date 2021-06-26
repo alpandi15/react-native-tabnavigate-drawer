@@ -109,7 +109,7 @@ const ScrollMenu = styled.View`
   height: 70%;
 `;
 const TouchMenu = styled.TouchableOpacity`
-  padding: 10px 16px;
+  padding: 14px 16px;
   flex-direction: row;
   align-items: center;
 `;
