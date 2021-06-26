@@ -3,6 +3,7 @@ import {Icon, Image} from 'react-native-elements';
 import {ScrollView, Text} from 'react-native';
 import styled from 'styled-components/native';
 import {removeUserToken} from '../../utils/storage';
+import {useAppContext} from '../../context/useAppContext';
 const styles = {
   userImage: {
     width: 50,
@@ -13,14 +14,6 @@ const styles = {
 };
 
 const CustomDrawerContent = props => {
-  const logout = async () => {
-    const removeToken = await removeUserToken();
-    console.log('LOGOUT ', removeToken);
-    props?.navigation?.replace('LoginStack');
-    if (removeToken) {
-    }
-  };
-
   return (
     <Wrapper>
       <SideHeader>
@@ -55,27 +48,39 @@ const CustomDrawerContent = props => {
           </TouchMenu>
         </ScrollView>
       </ScrollMenu>
-      <UserWrapper>
-        <Image
-          source={{
-            uri: 'https://images.unsplash.com/photo-1504593811423-6dd665756598?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
-          }}
-          style={styles?.userImage}
-        />
-        <UserContent>
-          <TextName>Stand User</TextName>
-          <ButtonLogout onPress={logout}>
-            <TextLogout>Keluar</TextLogout>
-            <Icon size={20} type="material" name="logout" color="#fb770d" />
-          </ButtonLogout>
-        </UserContent>
-      </UserWrapper>
+      <UserProfile navigation={props?.navigation} />
     </Wrapper>
   );
 };
 
 export default CustomDrawerContent;
 
+const UserProfile = ({navigation}) => {
+  const {state} = useAppContext();
+
+  const logout = async () => {
+    await removeUserToken();
+    navigation?.replace('LoginStack');
+  };
+
+  return (
+    <UserWrapper>
+      <Image
+        source={{
+          uri: state?.userAuth?.user?.image?.url,
+        }}
+        style={styles?.userImage}
+      />
+      <UserContent>
+        <TextName>{state?.userAuth?.user?.name}</TextName>
+        <ButtonLogout onPress={logout}>
+          <TextLogout>Keluar</TextLogout>
+          <Icon size={20} type="material" name="logout" color="#fb770d" />
+        </ButtonLogout>
+      </UserContent>
+    </UserWrapper>
+  );
+};
 const Wrapper = styled.SafeAreaView`
   flex: 1;
   background-color: #ffffff;
