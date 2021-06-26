@@ -7,6 +7,7 @@ import InputField from '../../components/form/Input';
 import {apiLogin} from '../../services/auth';
 import {setUserToken} from '../../utils/storage';
 import Toast from '../../components/toast/ToastAndroid';
+import {apiGetProfile} from '../../services/profile';
 
 const Login = ({navigation}) => {
   const {
@@ -21,17 +22,23 @@ const Login = ({navigation}) => {
     });
     if (res?.success) {
       await setUserToken(JSON.stringify(res?.data?.access_token));
+      const resUser = await apiGetProfile();
+      if (resUser?.success && resUser?.data?.roleId === 4) {
+        Toast({
+          message: res?.meta?.message,
+        });
+        navigation.replace('HomeApp');
+        return;
+      }
       Toast({
-        message: res?.meta?.message,
+        message: 'Login Error',
       });
-      navigation.replace('HomeApp');
       return;
     }
     Toast({
       message: res?.detail || res?.message,
     });
-
-    console.log('REsponse ', JSON.stringify(res?.data?.access_token));
+    return;
   };
 
   return (
@@ -143,6 +150,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     paddingTop: 20,
+    paddingBottom: 30,
   },
   buttonContent: {
     padding: 10,
