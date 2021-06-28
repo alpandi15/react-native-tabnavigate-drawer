@@ -21,7 +21,7 @@ const DrawerNavigator = () => {
           },
         });
       }
-      console.log('RESPONSE ME ', res);
+      // console.log('RESPONSE ME ', res);
     })();
   }, [dispatch]);
 

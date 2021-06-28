@@ -6,7 +6,7 @@ const SplashScreen = ({navigation}) => {
   React.useEffect(() => {
     (async () => {
       const token = await getUserToken();
-      console.log('TOKEN ', token);
+      // console.log('TOKEN ', token);
       if (token) {
         navigation.replace('HomeApp');
       } else {
