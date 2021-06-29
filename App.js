@@ -16,7 +16,9 @@ const navOptionHandler = () => ({
 const StackApp = createStackNavigator();
 const App = () => {
   useEffect(() => {
-    initOneSignal();
+    (async () => {
+      // await initOneSignal();
+    })()
   }, []);
 
   async function initOneSignal() {
@@ -24,9 +26,11 @@ const App = () => {
       OneSignal.setLogLevel(6, 0);
       OneSignal.setAppId('e5a57834-9df8-445a-bc01-623f3279b3c8');
       OneSignal.setRequiresUserPrivacyConsent(true);
-      OneSignal.promptForPushNotificationsWithUserResponse(response => {
-        console.log('Prompt response:', response);
-      });
+
+      // iphone support
+      // OneSignal.promptForPushNotificationsWithUserResponse(response => {
+      //   console.log('Prompt response:', response);
+      // });
 
       /* O N E S I G N A L  H A N D L E R S */
 
@@ -79,7 +83,7 @@ const App = () => {
 
       console.log('Device State ', deviceState);
     } catch (error) {
-      console.log(error);
+      console.log('Error', error);
     }
   }
 

@@ -17,6 +17,8 @@
   "dependencies": {
     "@react-native-community/cli-platform-android": "4.13.0",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-firebase/app": "^8.1.0",
+    "@react-native-firebase/messaging": "^7.6.1",
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/drawer": "^5.12.5",
     "@react-navigation/native": "^5.9.4",
@@ -27,7 +29,7 @@
     "react-native": "^0.64.2",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^1.10.3",
-    "react-native-onesignal": "^4.1.1",
+    "react-native-onesignal": "^3.8.1",
     "react-native-reanimated": "^2.2.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.3.0",
