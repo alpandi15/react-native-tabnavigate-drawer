@@ -6,6 +6,7 @@ import Contact from '../screens/Contact';
 import Variasi from '../screens/Variasi';
 import ForgotPassword from '../screens/auth/ForgotPassword';
 import LoginScreen from '../screens/auth/Login';
+import Notification from '../screens/notification';
 
 const Stack = createStackNavigator();
 
@@ -64,6 +65,7 @@ const MainStack = () => {
         options={navOptionHandler}
       />
       <Stack.Screen name="About" component={About} />
+      <Stack.Screen name="Notification" component={Notification} options={navOptionHandler} />
     </Stack.Navigator>
   );
 };

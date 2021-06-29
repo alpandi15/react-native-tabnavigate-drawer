@@ -1,8 +1,9 @@
 import React from 'react';
-import {Text, TouchableOpacity, Image} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
 import styled from 'styled-components/native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const CustomHeader = ({isHome, navigation}) => {
+const CustomHeader = ({isHome, title, navigation}) => {
   return (
     <Wrapper>
       {isHome ? (
@@ -10,15 +11,22 @@ const CustomHeader = ({isHome, navigation}) => {
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <Image source={require('../../static/icons/Menu.png')} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.push('Notification')}>
             <Image source={require('../../static/icons/Notif.png')} />
           </TouchableOpacity>
         </Content>
       ) : (
         <Content>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text>Back</Text>
-          </TouchableOpacity>
+          <BackButtonView>
+            <ButtonBack onPress={() => navigation.goBack()}>
+              <MaterialCommunityIcons name="arrow-left" size={25} />
+            </ButtonBack>
+            {
+              title && (
+                <TextTitle>{title}</TextTitle>
+              )
+            }
+          </BackButtonView>
         </Content>
       )}
     </Wrapper>
@@ -41,3 +49,15 @@ const Content = styled.View`
   padding-left: 10px;
   padding-right: 10px;
 `;
+const BackButtonView = styled.View`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+`
+const ButtonBack = styled.TouchableOpacity`
+  margin-right: 10px;
+`
+const TextTitle = styled.Text`
+  font-weight: bold;
+  font-size: 16px;
+`
