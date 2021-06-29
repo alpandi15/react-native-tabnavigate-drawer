@@ -3,7 +3,12 @@ import {Text, View, TouchableOpacity, Image} from 'react-native';
 import styled from 'styled-components/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const CustomHeader = ({isHome, title, navigation}) => {
+const CustomHeader = ({
+  isHome,
+  title,
+  navigation,
+  rightComponent
+}) => {
   return (
     <Wrapper>
       {isHome ? (
@@ -27,6 +32,7 @@ const CustomHeader = ({isHome, title, navigation}) => {
               )
             }
           </BackButtonView>
+          {rightComponent ? rightComponent : null}
         </Content>
       )}
     </Wrapper>
