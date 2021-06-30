@@ -1,9 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, ActivityIndicator} from 'react-native';
+import {SvgCss} from 'react-native-svg';
 import {getUserToken} from '../../utils/storage';
 import OneSignal from 'react-native-onesignal';
 import {set} from '../../utils/storage';
-import {PLAYERID} from '../../constant';
+import {PLAYERID, primaryColor} from '../../constant';
+import Logo from '../../static/icons/logo.js'
 
 const SplashScreen = ({navigation}) => {
   React.useEffect(() => {
@@ -27,7 +29,11 @@ const SplashScreen = ({navigation}) => {
 
   return (
     <View style={styles.center}>
-      <Text>Loading....</Text>
+      <SvgCss width="80" height="80" xml={Logo} />
+      <Text>Hooela</Text>
+      <View style={styles.loading}>
+        <ActivityIndicator color={primaryColor} size="small"/>
+      </View>
     </View>
   );
 };
@@ -38,7 +44,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
+    position: 'relative',
   },
+  loading: {
+    position: 'absolute',
+    bottom: 20
+  }
 });
 
 export default SplashScreen;
