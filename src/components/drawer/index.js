@@ -4,6 +4,10 @@ import {ScrollView, Text} from 'react-native';
 import styled from 'styled-components/native';
 import {removeUserToken} from '../../utils/storage';
 import {useAppContext} from '../../context/useAppContext';
+import {apiLogoutPlayerId} from '../../services/playerId'
+import {PLAYERID} from '../../constant'
+import {get} from '../../utils/storage'
+
 const styles = {
   userImage: {
     width: 50,
@@ -59,6 +63,10 @@ const UserProfile = ({navigation}) => {
   const {state} = useAppContext();
 
   const logout = async () => {
+    const playerId = await get(PLAYERID)
+    await apiLogoutPlayerId({
+      playerId
+    })
     await removeUserToken();
     navigation?.replace('LoginStack');
   };

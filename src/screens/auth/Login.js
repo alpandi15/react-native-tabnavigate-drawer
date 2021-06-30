@@ -9,7 +9,9 @@ import {apiLogin} from '../../services/auth';
 import {setUserToken} from '../../utils/storage';
 import Toast from '../../components/toast/ToastAndroid';
 import {apiGetProfile} from '../../services/profile';
-import {apiUpdatePlayerId} from '../../services/playerId'
+import {apiUpdatePlayerId} from '../../services/playerId';
+import {set} from '../../utils/storage';
+import {PLAYERID} from '../../constant';
 
 const Login = ({navigation}) => {
   const {
@@ -37,6 +39,9 @@ const Login = ({navigation}) => {
           const subs = await apiUpdatePlayerId({
             playerId: state?.userId
           })
+          if (subs?.success) {
+            set(PLAYERID, state?.userId)
+          }
           console.log('Subscr ', subs);
         })
         navigation.replace('HomeApp');
