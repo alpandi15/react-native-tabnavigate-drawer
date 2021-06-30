@@ -32,7 +32,7 @@ const CustomHeader = ({
               )
             }
           </BackButtonView>
-          {rightComponent ? rightComponent : null}
+          {rightComponent ? rightComponent() : null}
         </Content>
       )}
     </Wrapper>

@@ -3,11 +3,13 @@ import {View, StyleSheet, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Image} from 'react-native-elements';
 import {useForm} from 'react-hook-form';
+import OneSignal from 'react-native-onesignal'
 import InputField from '../../components/form/Input';
 import {apiLogin} from '../../services/auth';
 import {setUserToken} from '../../utils/storage';
 import Toast from '../../components/toast/ToastAndroid';
 import {apiGetProfile} from '../../services/profile';
+import {apiUpdatePlayerId} from '../../services/playerId'
 
 const Login = ({navigation}) => {
   const {
@@ -27,6 +29,16 @@ const Login = ({navigation}) => {
         Toast({
           message: res?.meta?.message,
         });
+        await OneSignal.getPermissionSubscriptionState(async state => {
+          console.log('State ', state);
+          if (!state?.userSubscriptionEnabled) {
+            OneSignal.setSubscription(true)
+          }
+          const subs = await apiUpdatePlayerId({
+            playerId: state?.userId
+          })
+          console.log('Subscr ', subs);
+        })
         navigation.replace('HomeApp');
         return;
       }

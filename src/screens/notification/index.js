@@ -26,7 +26,7 @@ const Notification = ({navigation}) => {
         title="Notification"
         isHome={false}
         navigation={navigation}
-        rightComponent={(
+        rightComponent={() => (
           <View>
             <Switch onChange={onSwitchNnotification} value={active} color="#fb770d" />
           </View>
