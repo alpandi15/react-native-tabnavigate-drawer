@@ -7,6 +7,8 @@ import Variasi from '../screens/Variasi';
 import ForgotPassword from '../screens/auth/ForgotPassword';
 import LoginScreen from '../screens/auth/Login';
 import Notification from '../screens/notification';
+import Verification from '../screens/auth/Verification';
+import ResetPassword from '../screens/auth/ResetPassword';
 
 const Stack = createStackNavigator();
 
@@ -51,6 +53,16 @@ const LoginStack = () => {
       <Stack.Screen
         name="ForgotPassword"
         component={ForgotPassword}
+        options={navOptionHandler}
+      />
+      <Stack.Screen
+        name="Verification"
+        component={Verification}
+        options={navOptionHandler}
+      />
+      <Stack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
         options={navOptionHandler}
       />
     </Stack.Navigator>

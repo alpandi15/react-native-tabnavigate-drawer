@@ -11,9 +11,11 @@ import Toast from '../../components/toast/ToastAndroid';
 import {apiGetProfile} from '../../services/profile';
 import {apiUpdatePlayerId} from '../../services/playerId';
 import {set} from '../../utils/storage';
-import {PLAYERID} from '../../constant';
+import {primaryColor} from '../../constant';
+import Countdown from '../../components/Countdown';
+import { Alert } from 'react-native';
 
-const Login = ({navigation}) => {
+const Verification = ({navigation}) => {
   const {
     control,
     handleSubmit,
@@ -21,20 +23,21 @@ const Login = ({navigation}) => {
   } = useForm();
   const onSubmit = async values => {
     console.log('VALUES ', values);
-    navigation.navigate('Verification', {email: values?.email})
+    navigation.navigate('ResetPassword', {email: values?.email})
   };
+
+  const onRemoveTimer = React.useCallback(async () => {
+    Alert.alert('Timeoff')
+  }, [])
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.content}>
         <View style={styles.textContent}>
-          <Text style={styles.title}>Lupa Password</Text>
-          <Text style={styles.subTitle}>
-            Masukkan alamat email terdaftar kamu, kami akan mengirimkan link untuk mereset kata sandi
-          </Text>
+          <Text style={styles.title}>Verification Code</Text>
         </View>
         <Image
-          source={require('../../static/images/lock.png')}
+          source={require('../../static/images/mail_sent.png')}
           style={styles.image}
           containerStyle={styles.imageWrapper}
         />
@@ -42,19 +45,22 @@ const Login = ({navigation}) => {
 
       <View style={styles.formContent}>
         <View style={styles.inputControl}>
+          <Text style={styles.subTitle}>
+            Silahkan masukkan kode verifikasi yang telah dikirimkan ke email kamu, jangan lupa juga melihat folder spam
+          </Text>
           <InputField
-            name="email"
+            name="code"
             control={control}
-            placeholder="Email"
+            placeholder="Verification Code"
             validation={{
-              required: '*Email Required',
-              pattern: {
-                value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,4}$/,
-                message: 'Use email format'
-              }
+              required: '*Required'
             }}
-            error={errors?.email}
+            error={errors?.code}
           />
+          <View style={styles.wrapperTime}>
+            <Text style={styles.textCowndown}>Sisa Waktu: </Text>
+            <Countdown timeTillDate={new Date('Wed Jun 30 2021 10:50:00 GMT+0700')} timeOut={onRemoveTimer} />
+          </View>
         </View>
         <View style={styles.buttonContent}>
           <Button
@@ -94,7 +100,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     letterSpacing: 0.5,
   },
-  subTitle: {marginTop: 10, color: '#ffffff', lineHeight: 20},
+  subTitle: {margin: 10, color: '#000000', lineHeight: 20},
   imageWrapper: {
     position: 'absolute',
     right: -70,
@@ -155,6 +161,11 @@ const styles = StyleSheet.create({
   inputStyle: {
     fontSize: 14,
   },
+  wrapperTime: {
+    margin: 10,
+    flexDirection: 'row',
+    alignItems: 'center'
+  }
 });
 
-export default Login;
+export default Verification;

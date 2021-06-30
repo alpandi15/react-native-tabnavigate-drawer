@@ -13,28 +13,28 @@ import {apiUpdatePlayerId} from '../../services/playerId';
 import {set} from '../../utils/storage';
 import {PLAYERID} from '../../constant';
 
-const Login = ({navigation}) => {
+const ResetPassword = ({navigation}) => {
   const {
     control,
     handleSubmit,
     formState: {errors, isSubmitting},
   } = useForm();
   const onSubmit = async values => {
-    console.log('VALUES ', values);
-    navigation.navigate('Verification', {email: values?.email})
+    console.log('Submit ', values);
+    navigation.navigate('Login')
   };
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.content}>
         <View style={styles.textContent}>
-          <Text style={styles.title}>Lupa Password</Text>
+          <Text style={styles.title}>Reset Password</Text>
           <Text style={styles.subTitle}>
-            Masukkan alamat email terdaftar kamu, kami akan mengirimkan link untuk mereset kata sandi
+            Masukkan password baru, untuk me-reset ulang kata sandi kamu
           </Text>
         </View>
         <Image
-          source={require('../../static/images/lock.png')}
+          source={require('../../static/images/reset_password.png')}
           style={styles.image}
           containerStyle={styles.imageWrapper}
         />
@@ -43,23 +43,30 @@ const Login = ({navigation}) => {
       <View style={styles.formContent}>
         <View style={styles.inputControl}>
           <InputField
-            name="email"
+            name="password"
             control={control}
-            placeholder="Email"
+            placeholder="Password"
             validation={{
-              required: '*Email Required',
-              pattern: {
-                value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,4}$/,
-                message: 'Use email format'
-              }
+              required: '*Required',
             }}
-            error={errors?.email}
+            error={errors?.password}
+            secureTextEntry={true}
+          />
+          <InputField
+            name="confirm_password"
+            control={control}
+            placeholder="Confirm Password"
+            validation={{
+              required: '*Required',
+            }}
+            error={errors?.confirm_password}
+            secureTextEntry={true}
           />
         </View>
         <View style={styles.buttonContent}>
           <Button
             onPress={handleSubmit(onSubmit)}
-            title="Kirim"
+            title="Simpan"
             loading={isSubmitting}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitle}
@@ -122,7 +129,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     paddingTop: 20,
-    paddingBottom: 30
+    paddingBottom: 30,
   },
   buttonContent: {
     padding: 10,
@@ -157,4 +164,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default ResetPassword;
