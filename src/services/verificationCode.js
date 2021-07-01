@@ -9,12 +9,3 @@ export const verificationCode = async data => {
     method: 'post',
   });
 };
-
-export const resendVerificationCode = async data => {
-  return request({
-    url: '/auth/resend/verification',
-    auth: false,
-    data,
-    method: 'post',
-  });
-};

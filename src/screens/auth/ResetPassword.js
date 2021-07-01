@@ -1,27 +1,37 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Image} from 'react-native-elements';
 import {useForm} from 'react-hook-form';
-import OneSignal from 'react-native-onesignal'
 import InputField from '../../components/form/Input';
-import {apiLogin} from '../../services/auth';
-import {setUserToken} from '../../utils/storage';
 import Toast from '../../components/toast/ToastAndroid';
-import {apiGetProfile} from '../../services/profile';
-import {apiUpdatePlayerId} from '../../services/playerId';
-import {set} from '../../utils/storage';
-import {PLAYERID} from '../../constant';
+import {apiResetPassword} from '../../services/forgotPassword';
+import Loading from '../../components/loading';
 
-const ResetPassword = ({navigation}) => {
+const ResetPassword = ({navigation, route}) => {
   const {
     control,
     handleSubmit,
+    getValues,
     formState: {errors, isSubmitting},
   } = useForm();
   const onSubmit = async values => {
-    console.log('Submit ', values);
-    navigation.navigate('Login')
+    const res = await apiResetPassword('email', {
+      account: route?.params?.email,
+      password: values?.password,
+    });
+    console.log('Submit ', res);
+    if (res?.success) {
+      Toast({
+        message: res?.meta?.message,
+      });
+      navigation.replace('Login');
+      return;
+    }
+    Toast({
+      message: res?.message,
+    });
+    return;
+    // navigation.navigate('Login');
   };
 
   return (
@@ -48,6 +58,10 @@ const ResetPassword = ({navigation}) => {
             placeholder="Password"
             validation={{
               required: '*Required',
+              minLength: {
+                value: 8,
+                message: 'Password must have at least 8 characters',
+              },
             }}
             error={errors?.password}
             secureTextEntry={true}
@@ -58,6 +72,8 @@ const ResetPassword = ({navigation}) => {
             placeholder="Confirm Password"
             validation={{
               required: '*Required',
+              validate: value =>
+                value === getValues('password') || 'The passwords do not match',
             }}
             error={errors?.confirm_password}
             secureTextEntry={true}
@@ -74,6 +90,7 @@ const ResetPassword = ({navigation}) => {
           />
         </View>
       </View>
+      <Loading visible={isSubmitting} />
     </View>
   );
 };

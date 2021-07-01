@@ -3,15 +3,10 @@ import {View, StyleSheet, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Image} from 'react-native-elements';
 import {useForm} from 'react-hook-form';
-import OneSignal from 'react-native-onesignal';
 import InputField from '../../components/form/Input';
-import {apiLogin} from '../../services/auth';
-import {setUserToken} from '../../utils/storage';
 import Toast from '../../components/toast/ToastAndroid';
-import {apiGetProfile} from '../../services/profile';
 import {verificationCode} from '../../services/verificationCode';
 import {get} from '../../utils/storage';
-import {primaryColor} from '../../constant';
 import Countdown from '../../components/Countdown';
 import {Alert} from 'react-native';
 import {

@@ -8,3 +8,12 @@ export async function apiForgotPassword(type = 'email', data) {
     method: 'post',
   });
 }
+
+export const apiResetPassword = async (type = 'email', data) => {
+  return request({
+    url: `/auth/reset-password/${type}`,
+    auth: false,
+    data,
+    method: 'post',
+  });
+};
