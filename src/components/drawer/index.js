@@ -1,6 +1,6 @@
 import React from 'react';
 import {Icon, Image} from 'react-native-elements';
-import {ScrollView, Text} from 'react-native';
+import {ScrollView, Text, Alert} from 'react-native';
 import styled from 'styled-components/native';
 import {removeUserToken} from '../../utils/storage';
 import {useAppContext} from '../../context/useAppContext';
@@ -61,8 +61,28 @@ export default CustomDrawerContent;
 
 const UserProfile = ({navigation}) => {
   const {state} = useAppContext();
-  console.log('State ', state);
+
   const logout = async () => {
+    Alert.alert(
+      'Logout',
+      'Ingin keluar dari akun kamu ?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => doLogout(),
+        },
+      ],
+      {
+        cancelable: true,
+      },
+    );
+  };
+
+  const doLogout = async () => {
     const playerId = await get(PLAYERID);
     await apiLogoutPlayerId({
       playerId,
@@ -70,7 +90,6 @@ const UserProfile = ({navigation}) => {
     await removeUserToken();
     navigation?.replace('LoginStack');
   };
-
   return (
     <UserWrapper>
       <Image
