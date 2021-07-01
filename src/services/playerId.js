@@ -5,17 +5,17 @@ const apiUpdatePlayerId = async data => {
     url: '/update-player-id',
     auth: true,
     data,
-    method: 'put'
+    method: 'put',
   });
 };
 
-const apiLogoutPlayerId = async (data) => {
+const apiLogoutPlayerId = async data => {
   return request({
     url: '/update-player-id/logout',
     auth: true,
     data,
-    method: 'put'
-  })
-}
+    method: 'put',
+  });
+};
 
-export {apiUpdatePlayerId, apiLogoutPlayerId}
+export {apiUpdatePlayerId, apiLogoutPlayerId};

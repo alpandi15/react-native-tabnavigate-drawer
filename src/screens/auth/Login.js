@@ -12,6 +12,7 @@ import {apiGetProfile} from '../../services/profile';
 import {apiUpdatePlayerId} from '../../services/playerId';
 import {set} from '../../utils/storage';
 import {PLAYERID} from '../../constant';
+import Loading from '../../components/loading';
 
 const Login = ({navigation}) => {
   const {
@@ -112,6 +113,7 @@ const Login = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
+      <Loading visible={isSubmitting} />
     </View>
   );
 };

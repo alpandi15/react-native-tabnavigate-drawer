@@ -1,34 +1,68 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Image} from 'react-native-elements';
 import {useForm} from 'react-hook-form';
-import OneSignal from 'react-native-onesignal'
+import OneSignal from 'react-native-onesignal';
 import InputField from '../../components/form/Input';
 import {apiLogin} from '../../services/auth';
 import {setUserToken} from '../../utils/storage';
 import Toast from '../../components/toast/ToastAndroid';
 import {apiGetProfile} from '../../services/profile';
-import {apiUpdatePlayerId} from '../../services/playerId';
-import {set} from '../../utils/storage';
+import {verificationCode} from '../../services/verificationCode';
+import {get} from '../../utils/storage';
 import {primaryColor} from '../../constant';
 import Countdown from '../../components/Countdown';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
+import {
+  STORAGE_FORGOTTIME,
+  TYPE_CODE_FORGOT,
+  TYPE_ACCOUNT_EMAIL,
+} from '../../constant';
+import Loading from '../../components/loading';
 
-const Verification = ({navigation}) => {
+const Verification = ({navigation, route}) => {
   const {
     control,
     handleSubmit,
     formState: {errors, isSubmitting},
   } = useForm();
+  const [expired, setExpired] = useState(null);
+  const [resend, setResend] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const timeOut = await get(STORAGE_FORGOTTIME);
+      setResend(false);
+      setExpired(timeOut);
+    })();
+  }, []);
+
   const onSubmit = async values => {
-    console.log('VALUES ', values);
-    navigation.navigate('ResetPassword', {email: values?.email})
+    console.log('VALUES ', values, route?.params?.email);
+    const res = await verificationCode({
+      account: route?.params?.email,
+      typeCode: TYPE_CODE_FORGOT,
+      typeAccount: TYPE_ACCOUNT_EMAIL,
+      code: values?.code,
+    });
+    if (res?.success) {
+      Toast({
+        message: res?.meta?.message,
+      });
+      navigation.navigate('ResetPassword', {email: route?.params?.email});
+      return;
+    }
+    Toast({
+      message: res?.message,
+    });
+    return;
   };
 
   const onRemoveTimer = React.useCallback(async () => {
-    Alert.alert('Timeoff')
-  }, [])
+    setResend(true);
+    Alert.alert('Timeoff');
+  }, []);
 
   return (
     <View style={styles.wrapper}>
@@ -46,20 +80,34 @@ const Verification = ({navigation}) => {
       <View style={styles.formContent}>
         <View style={styles.inputControl}>
           <Text style={styles.subTitle}>
-            Silahkan masukkan kode verifikasi yang telah dikirimkan ke email kamu, jangan lupa juga melihat folder spam
+            Silahkan masukkan kode verifikasi yang telah dikirimkan ke email
+            kamu, jangan lupa juga melihat folder spam
           </Text>
           <InputField
             name="code"
             control={control}
             placeholder="Verification Code"
             validation={{
-              required: '*Required'
+              required: '*Required',
             }}
             error={errors?.code}
           />
           <View style={styles.wrapperTime}>
-            <Text style={styles.textCowndown}>Sisa Waktu: </Text>
-            <Countdown timeTillDate={new Date('Wed Jun 30 2021 10:50:00 GMT+0700')} timeOut={onRemoveTimer} />
+            {resend && (
+              <TouchableOpacity
+                onPress={() => navigation.replace('ForgotPassword')}>
+                <Text>Resend Code</Text>
+              </TouchableOpacity>
+            )}
+            {!resend && expired && (
+              <>
+                <Text style={styles.textCowndown}>Sisa Waktu: </Text>
+                <Countdown
+                  timeTillDate={new Date(expired)}
+                  timeOut={onRemoveTimer}
+                />
+              </>
+            )}
           </View>
         </View>
         <View style={styles.buttonContent}>
@@ -73,6 +121,7 @@ const Verification = ({navigation}) => {
           />
         </View>
       </View>
+      <Loading visible={isSubmitting} />
     </View>
   );
 };
@@ -128,7 +177,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     paddingTop: 20,
-    paddingBottom: 30
+    paddingBottom: 30,
   },
   buttonContent: {
     padding: 10,
@@ -164,8 +213,8 @@ const styles = StyleSheet.create({
   wrapperTime: {
     margin: 10,
     flexDirection: 'row',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default Verification;

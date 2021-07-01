@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, SafeAreaView} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Image} from 'react-native-elements';
 import {useForm} from 'react-hook-form';
@@ -9,11 +9,14 @@ import {apiLogin} from '../../services/auth';
 import {setUserToken} from '../../utils/storage';
 import Toast from '../../components/toast/ToastAndroid';
 import {apiGetProfile} from '../../services/profile';
-import {apiUpdatePlayerId} from '../../services/playerId';
+import {apiForgotPassword} from '../../services/forgotPassword';
 import {set} from '../../utils/storage';
-import {PLAYERID} from '../../constant';
+import {PLAYERID, STORAGE_FORGOTTIME} from '../../constant';
+import Header from '../../components/header/AuthHeader';
+import moment from 'moment';
+import Loading from '../../components/loading';
 
-const Login = ({navigation}) => {
+const ForgotPassword = ({navigation}) => {
   const {
     control,
     handleSubmit,
@@ -21,53 +24,76 @@ const Login = ({navigation}) => {
   } = useForm();
   const onSubmit = async values => {
     console.log('VALUES ', values);
-    navigation.navigate('Verification', {email: values?.email})
+    // console.log('MOMENT ', moment('2021-07-01 12:20:00', 'YYYY-MM-DD HH:mm:ss').add({ hours: 7 }).toString())
+    const result = await apiForgotPassword('email', { account: values?.email, roleId: 4 })
+    console.log('RES FORGOT ', result, moment(result?.data?.expired, 'YYYY-MM-DD HH:mm:ss').add({ hours: 7 }).toString())
+    if (result.success) {
+      set(STORAGE_FORGOTTIME, moment(result?.data?.expired, 'YYYY-MM-DD HH:mm:ss').add({ hours: 7 }).toString())
+      Toast({
+        message: result?.meta?.message,
+      });
+      navigation.navigate('Verification', {email: values?.email})
+      return
+    } else if (typeof result.detail === 'object') {
+      Toast({
+        message: result?.message,
+      });
+      navigation.navigate('Verification', {email: values?.email})
+    }
+    Toast({
+      message: result?.message,
+    });
+    // navigation.navigate('Verification', {email: values?.email})
+    return
   };
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.content}>
-        <View style={styles.textContent}>
-          <Text style={styles.title}>Lupa Password</Text>
-          <Text style={styles.subTitle}>
-            Masukkan alamat email terdaftar kamu, kami akan mengirimkan link untuk mereset kata sandi
-          </Text>
+    <SafeAreaView style={{flex: 1}}>
+      <View style={styles.wrapper}>
+        <View style={styles.content}>
+          <View style={styles.textContent}>
+            <Text style={styles.title}>Lupa Password</Text>
+            <Text style={styles.subTitle}>
+              Masukkan alamat email terdaftar kamu, kami akan mengirimkan link untuk mereset kata sandi
+            </Text>
+          </View>
+          <Image
+            source={require('../../static/images/lock.png')}
+            style={styles.image}
+            containerStyle={styles.imageWrapper}
+          />
         </View>
-        <Image
-          source={require('../../static/images/lock.png')}
-          style={styles.image}
-          containerStyle={styles.imageWrapper}
-        />
-      </View>
 
-      <View style={styles.formContent}>
-        <View style={styles.inputControl}>
-          <InputField
-            name="email"
-            control={control}
-            placeholder="Email"
-            validation={{
-              required: '*Email Required',
-              pattern: {
-                value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,4}$/,
-                message: 'Use email format'
-              }
-            }}
-            error={errors?.email}
-          />
-        </View>
-        <View style={styles.buttonContent}>
-          <Button
-            onPress={handleSubmit(onSubmit)}
-            title="Kirim"
-            loading={isSubmitting}
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.buttonTitle}
-            disabled={isSubmitting}
-          />
+        <View style={styles.formContent}>
+          <View style={styles.inputControl}>
+            <InputField
+              name="email"
+              control={control}
+              placeholder="Email"
+              validation={{
+                required: '*Email Required',
+                pattern: {
+                  value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,4}$/,
+                  message: 'Use email format'
+                }
+              }}
+              error={errors?.email}
+            />
+          </View>
+          <View style={styles.buttonContent}>
+            <Button
+              onPress={handleSubmit(onSubmit)}
+              title="Kirim"
+              loading={isSubmitting}
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.buttonTitle}
+              disabled={isSubmitting}
+            />
+          </View>
         </View>
       </View>
-    </View>
+      <Loading visible={isSubmitting} />
+    </SafeAreaView>
   );
 };
 
@@ -157,4 +183,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default ForgotPassword;
