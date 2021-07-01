@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "346836254967",
-    "project_id": "push-notification-3ea6d",
-    "storage_bucket": "push-notification-3ea6d.appspot.com"
+    "project_number": "857469235723",
+    "project_id": "hooela",
+    "storage_bucket": "hooela.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:346836254967:android:cbf99cda47611afe2e53f2",
+        "mobilesdk_app_id": "1:857469235723:android:2c85ab57d0ad576543cd0e",
         "android_client_info": {
           "package_name": "com.hooela"
         }
       },
       "oauth_client": [
         {
-          "client_id": "346836254967-cst8sm6ktcjntj9u3pseeujrsjsi0nvi.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hooela",
-            "certificate_hash": "d9efdfd56325ad0ed7b2fb94ca1cfdf13a7c78a6"
-          }
-        },
-        {
-          "client_id": "346836254967-el0dtnuoad0ukc1m0olpbmcb8b6fubc0.apps.googleusercontent.com",
+          "client_id": "857469235723-2g9tg4cfvoi7bpsvebju6femkrcm5cpp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB1ihAFT2i8BFEyJmmy5NT0t5RzviKgwpQ"
+          "current_key": "AIzaSyAA1pRVmRI0Gp5ktoHFVF0eIhts-q4Edfg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "346836254967-el0dtnuoad0ukc1m0olpbmcb8b6fubc0.apps.googleusercontent.com",
+              "client_id": "857469235723-2g9tg4cfvoi7bpsvebju6femkrcm5cpp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
