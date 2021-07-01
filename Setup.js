@@ -2,7 +2,8 @@ import * as React from 'react';
 import App from './App';
 import firebase from '@react-native-firebase/app';
 import OneSignal from 'react-native-onesignal';
-import messaging from '@react-native-firebase/messaging';
+import {ONESIGNALID} from './src/utils/config';
+// import messaging from '@react-native-firebase/messaging';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyB1ihAFT2i8BFEyJmmy5NT0t5RzviKgwpQ',
@@ -34,11 +35,13 @@ const Setup = () => {
   const messageClick = device => {
     console.log('Device info: ', device);
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(async () => {
-    OneSignal.setLogLevel(6, 0)
+    OneSignal.setLogLevel(6, 0);
     OneSignal.enableVibrate(true);
     OneSignal.enableSound(true);
-    OneSignal.init('e5a57834-9df8-445a-bc01-623f3279b3c8', {
+    OneSignal.init(ONESIGNALID, {
       kOSSettingsKeyAutoPrompt: false,
       kOSSettingsKeyInAppLaunchURL: false,
       kOSSettingsKeyInFocusDisplayOption: 2,
@@ -49,12 +52,12 @@ const Setup = () => {
     OneSignal.addEventListener('inAppMessageClicked', messageClick);
 
     OneSignal.getPermissionSubscriptionState(state => {
-      console.log('SUBSCRIBE ', state)
-    })
+      console.log('SUBSCRIBE ', state);
+    });
     // OneSignal.setSubscription(true)
-  }, [])
+  }, []);
 
-  return <App />
-}
+  return <App />;
+};
 
-export default Setup
+export default Setup;

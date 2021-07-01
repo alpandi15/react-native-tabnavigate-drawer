@@ -24,12 +24,6 @@ module.exports = {
         },
       },
     ],
-    [
-      "babel-plugin-inline-import",
-      {
-        "extensions": [".svg"]
-      }
-    ]
   ],
   env: {
     production: {

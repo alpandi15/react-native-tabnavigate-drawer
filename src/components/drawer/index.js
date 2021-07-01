@@ -4,9 +4,9 @@ import {ScrollView, Text} from 'react-native';
 import styled from 'styled-components/native';
 import {removeUserToken} from '../../utils/storage';
 import {useAppContext} from '../../context/useAppContext';
-import {apiLogoutPlayerId} from '../../services/playerId'
-import {PLAYERID} from '../../constant'
-import {get} from '../../utils/storage'
+import {apiLogoutPlayerId} from '../../services/playerId';
+import {PLAYERID} from '../../constant';
+import {get} from '../../utils/storage';
 
 const styles = {
   userImage: {
@@ -61,12 +61,12 @@ export default CustomDrawerContent;
 
 const UserProfile = ({navigation}) => {
   const {state} = useAppContext();
-
+  console.log('State ', state);
   const logout = async () => {
-    const playerId = await get(PLAYERID)
+    const playerId = await get(PLAYERID);
     await apiLogoutPlayerId({
-      playerId
-    })
+      playerId,
+    });
     await removeUserToken();
     navigation?.replace('LoginStack');
   };
@@ -80,7 +80,7 @@ const UserProfile = ({navigation}) => {
         style={styles?.userImage}
       />
       <UserContent>
-        <TextName>{state?.userAuth?.user?.name}</TextName>
+        <TextName>{state?.userAuth?.user?.stand?.name}</TextName>
         <ButtonLogout onPress={logout}>
           <TextLogout>Keluar</TextLogout>
           <Icon size={20} type="material" name="logout" color="#fb770d" />

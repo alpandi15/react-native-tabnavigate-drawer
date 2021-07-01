@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text, SafeAreaView} from 'react-native';
-import { Switch } from 'react-native-elements'
+import {Switch} from 'react-native-elements';
 import Header from '../../components/header';
 import OneSignal from 'react-native-onesignal';
 
 const Notification = ({navigation}) => {
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState(false);
   React.useEffect(() => {
     OneSignal.getPermissionSubscriptionState(state => {
       if (state?.subscriptionEnabled) {
-        setActive(true)
+        setActive(true);
       } else {
-        setActive(false)
+        setActive(false);
       }
       console.log('State ', state?.subscriptionEnabled);
-    })
-  }, [])
+    });
+  }, []);
   const onSwitchNnotification = async () => {
-    OneSignal.setSubscription(!active)
-    setActive(!active)
-  }
+    OneSignal.setSubscription(!active);
+    setActive(!active);
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header
@@ -28,7 +28,11 @@ const Notification = ({navigation}) => {
         navigation={navigation}
         rightComponent={() => (
           <View>
-            <Switch onChange={onSwitchNnotification} value={active} color="#fb770d" />
+            <Switch
+              onChange={onSwitchNnotification}
+              value={active}
+              color="#fb770d"
+            />
           </View>
         )}
       />
