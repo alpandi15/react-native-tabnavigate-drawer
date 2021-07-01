@@ -1,26 +1,11 @@
 import React from 'react';
-import {
-  View,
-  Button,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  SafeAreaView,
-  Image,
-} from 'react-native';
+import {View, Button, Text, StyleSheet, SafeAreaView} from 'react-native';
 import Header from '../components/header';
-
 const Beranda = ({navigation}) => {
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={styles.component}>
       <Header title="Home" isHome={true} navigation={navigation} />
-      <View
-        style={{
-          flex: 1,
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+      <View style={styles?.content}>
         <View>
           <Text>This is the home screen</Text>
           <Button
@@ -34,11 +19,14 @@ const Beranda = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  center: {
+  component: {
     flex: 1,
-    justifyContent: 'center',
+  },
+  content: {
+    flex: 1,
+    height: '100%',
     alignItems: 'center',
-    textAlign: 'center',
+    justifyContent: 'center',
   },
 });
 

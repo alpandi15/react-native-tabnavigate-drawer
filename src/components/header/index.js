@@ -1,7 +1,10 @@
 import React from 'react';
-import {TouchableOpacity, Image} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {SvgCss} from 'react-native-svg';
+import MenuIcon from '../../static/icons/Menu';
+import NotifIcon from '../../static/icons/Notif';
+import ArrowBackIcon from '../../static/icons/Back';
 
 const CustomHeader = ({isHome, title, navigation, rightComponent}) => {
   return (
@@ -9,17 +12,17 @@ const CustomHeader = ({isHome, title, navigation, rightComponent}) => {
       {isHome ? (
         <Content>
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <Image source={require('../../static/icons/Menu.png')} />
+            <SvgCss xml={MenuIcon} width={30} height={30} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.push('Notification')}>
-            <Image source={require('../../static/icons/Notif.png')} />
+            <SvgCss xml={NotifIcon} width={30} height={30} />
           </TouchableOpacity>
         </Content>
       ) : (
         <Content>
           <BackButtonView>
             <ButtonBack onPress={() => navigation.goBack()}>
-              <MaterialCommunityIcons name="arrow-left" size={25} />
+              <SvgCss xml={ArrowBackIcon} width={40} height={40} />
             </ButtonBack>
             {title && <TextTitle>{title}</TextTitle>}
           </BackButtonView>

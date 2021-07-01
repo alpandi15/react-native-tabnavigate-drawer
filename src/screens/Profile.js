@@ -1,21 +1,33 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-
-const Profile = ({navigation}) => {
+import {View, Button, Text, StyleSheet, SafeAreaView} from 'react-native';
+import Header from '../components/header';
+const Beranda = ({navigation}) => {
   return (
-    <View style={styles.center}>
-      <Text>Halaman Profile</Text>
-    </View>
+    <SafeAreaView style={styles.component}>
+      <Header title="Home" isHome={true} navigation={navigation} />
+      <View style={styles?.content}>
+        <View>
+          <Text>This is the home screen</Text>
+          <Button
+            title="Go to About Profile"
+            onPress={() => navigation.navigate('About')}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  center: {
+  component: {
     flex: 1,
-    justifyContent: 'center',
+  },
+  content: {
+    flex: 1,
+    height: '100%',
     alignItems: 'center',
-    textAlign: 'center',
+    justifyContent: 'center',
   },
 });
 
-export default Profile;
+export default Beranda;

@@ -77,7 +77,11 @@ const MainStack = () => {
         options={navOptionHandler}
       />
       <Stack.Screen name="About" component={About} />
-      <Stack.Screen name="Notification" component={Notification} options={navOptionHandler} />
+      <Stack.Screen
+        name="Notification"
+        component={Notification}
+        options={navOptionHandler}
+      />
     </Stack.Navigator>
   );
 };

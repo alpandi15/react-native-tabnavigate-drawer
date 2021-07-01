@@ -1,0 +1,3 @@
+export default `
+<svg id="Outlines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}</style></defs><title>Icon FCM 2019</title><line class="cls-1" x1="14" y1="26" x2="18" y2="26"/><path class="cls-1" d="M25,20a2.83,2.83,0,0,1-1,2.12,3.31,3.31,0,0,1-1.26.7,3.46,3.46,0,0,1-1.12.18H10.38a3.48,3.48,0,0,1-1.13-.18A3,3,0,0,1,7,20a2.74,2.74,0,0,1,.41-1.44,10.89,10.89,0,0,0,1.84-5.65v-.66c0-3.38,3.12-6.33,6.92-6.25a7.1,7.1,0,0,1,4.6,1.76,5.62,5.62,0,0,1,2,4.24v.91a10.89,10.89,0,0,0,1.84,5.65A2.74,2.74,0,0,1,25,20Z"/></svg>
+`;
