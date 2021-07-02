@@ -2,11 +2,10 @@ import React from 'react';
 import {Image} from 'react-native-elements';
 import {ScrollView, Text, Alert} from 'react-native';
 import styled from 'styled-components/native';
-import {removeUserToken} from '../../utils/storage';
+import {removeUserToken, get} from '../../utils/storage';
 import {useAppContext} from '../../context/useAppContext';
 import {apiLogoutPlayerId} from '../../services/playerId';
 import {PLAYERID} from '../../constant';
-import {get} from '../../utils/storage';
 
 const styles = {
   userImage: {
@@ -29,6 +28,16 @@ const CustomDrawerContent = props => {
           <TouchMenu onPress={() => props.navigation.navigate('Home')}>
             <ImageStyle source={require('../../static/icons/Report.png')} />
             <Text>Home</Text>
+          </TouchMenu>
+          <TouchMenu onPress={() => props.navigation.navigate('Variasi')}>
+            <ImageStyle source={require('../../static/icons/Variation.png')} />
+            <Text>Variasi</Text>
+          </TouchMenu>
+          <TouchMenu onPress={() => props.navigation.navigate('Variasi')}>
+            <ImageStyle
+              source={require('../../static/icons/Menu_Category.png')}
+            />
+            <Text>Kategori</Text>
           </TouchMenu>
           <TouchMenu onPress={() => props.navigation.navigate('Variasi')}>
             <ImageStyle source={require('../../static/icons/Payment.png')} />
