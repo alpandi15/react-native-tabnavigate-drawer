@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Alert} from 'react-native';
+import {Alert, StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import OneSignal from 'react-native-onesignal';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
@@ -9,6 +9,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import LoadingScreen from './src/screens/splash';
 import {LoginStack} from './src/navigation/StackNavigator';
 import {AppProvider} from './src/context/AppContext';
+import { primaryColor } from './src/constant';
 
 const navOptionHandler = () => ({
   headerShown: false,
@@ -18,7 +19,7 @@ const App = () => {
   useEffect(() => {
     (async () => {
       // await initOneSignal();
-    })()
+    })();
   }, []);
 
   async function initOneSignal() {
@@ -89,6 +90,13 @@ const App = () => {
 
   return (
     <AppProvider>
+      <StatusBar
+        animated={true}
+        backgroundColor={primaryColor}
+        // barStyle
+        // showHideTransition
+        // hidden={true}
+      />
       <SafeAreaProvider>
         <NavigationContainer>
           <StackApp.Navigator initialRouteName="Loading">

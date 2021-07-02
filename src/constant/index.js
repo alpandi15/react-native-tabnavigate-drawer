@@ -2,6 +2,8 @@ export const PLAYERID = 'OneSignalPlayerId';
 export const STORAGE_FORGOTTIME = 'ForgotTimeout';
 export const primaryColor = '#fb770d';
 export const grayColor = '#325d79';
+export const redColor = '#ff7d7d';
+export const blueColor = '#7dd0ff';
 
 export const TYPE_CODE_FORGOT = 0;
 export const TYPE_CODE_VERIFICATION = 1;
