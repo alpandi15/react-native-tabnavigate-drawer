@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon, Image} from 'react-native-elements';
+import {Image} from 'react-native-elements';
 import {ScrollView, Text, Alert} from 'react-native';
 import styled from 'styled-components/native';
 import {removeUserToken} from '../../utils/storage';
@@ -102,7 +102,7 @@ const UserProfile = ({navigation}) => {
         <TextName>{state?.userAuth?.user?.stand?.name}</TextName>
         <ButtonLogout onPress={logout}>
           <TextLogout>Keluar</TextLogout>
-          <Icon size={20} type="material" name="logout" color="#fb770d" />
+          {/* <Icon size={20} type="material" name="logout" color="#fb770d" /> */}
         </ButtonLogout>
       </UserContent>
     </UserWrapper>
