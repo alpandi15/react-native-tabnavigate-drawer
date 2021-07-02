@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import styled from 'styled-components';
 import {primaryColor, redColor} from '../../constant';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import ButtonComponent from '../../components/form/Button';
+import {apiGetStandOrder} from '../../services/order';
+import moment from 'moment';
+
 const styles = StyleSheet.create({
   button: {
     height: 35,
@@ -13,85 +16,97 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
 });
+
 const ListOrder = () => {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const res = await apiGetStandOrder({
+        relationship: 1,
+        sort: '-createdAt',
+        keyword: null,
+        limit: 10,
+      });
+      console.log('Order ', res);
+      setLoading(false);
+      if (res?.success) {
+        setData(res?.data);
+      }
+    })();
+  }, []);
+
   return (
     <Wrapper>
       <MainText>Pesanan Masuk</MainText>
-      <Card>
-        <Head>
-          <View>
-            <OrderNumber>#FCM000</OrderNumber>
-            <Time>10:46 WIB</Time>
-          </View>
-          <CustomerTable>
-            <TextMeja>Meja</TextMeja>
-            <NomorMeja>Meja 01</NomorMeja>
-          </CustomerTable>
-        </Head>
-        <Body>
-          <CustomerName>Muhammad Al-Pandi</CustomerName>
-          <OrderStatus>
-            <IconMaterial
-              name="clock-time-four-outline"
-              size={15}
-              color={redColor}
+      {!loading &&
+        data?.map(val => {
+          return (
+            <CardComponent
+              key={val?.uuid}
+              nameCustomer={val?.nameCustomer}
+              createdAt={moment(val?.createdAt).format('HH:mm A')}
+              tableNumber={val?.tableNumber}
+              qty={2}
+              totalPrice={val?.totalPrice}
             />
-            <StatusText>Belum Bayar</StatusText>
-          </OrderStatus>
-        </Body>
-        <Action>
-          <View>
-            <Items>1 Items</Items>
-            <Price>Rp. 19.000</Price>
-          </View>
-          <ButtonComponent
-            title="Konfirmasi Pembayaran"
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonText}
-            type="primary"
-          />
-        </Action>
-      </Card>
-      <Card>
-        <Head>
-          <View>
-            <OrderNumber>#FCM000</OrderNumber>
-            <Time>10:46 WIB</Time>
-          </View>
-          <CustomerTable>
-            <TextMeja>Meja</TextMeja>
-            <NomorMeja>Meja 01</NomorMeja>
-          </CustomerTable>
-        </Head>
-        <Body>
-          <CustomerName>Muhammad Al-Pandi</CustomerName>
-          <OrderStatus>
-            <IconMaterial
-              name="clock-time-four-outline"
-              size={15}
-              color={redColor}
-            />
-            <StatusText>Belum Bayar</StatusText>
-          </OrderStatus>
-        </Body>
-        <Action>
-          <View>
-            <Items>1 Items</Items>
-            <Price>Rp. 19.000</Price>
-          </View>
-          <ButtonComponent
-            title="Konfirmasi Pembayaran"
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonText}
-            type="secondary"
-          />
-        </Action>
-      </Card>
+          );
+        })}
     </Wrapper>
   );
 };
 
 export default ListOrder;
+
+const CardComponent = ({
+  invoiceId,
+  createdAt,
+  tableNumber,
+  nameCustomer,
+  isPaid,
+  qty,
+  totalPrice,
+}) => {
+  return (
+    <Card>
+      <Head>
+        <View>
+          <OrderNumber>{invoiceId}</OrderNumber>
+          <Time>{createdAt}</Time>
+        </View>
+        <CustomerTable>
+          <TextMeja>Meja</TextMeja>
+          <NomorMeja>{tableNumber}</NomorMeja>
+        </CustomerTable>
+      </Head>
+      <Body>
+        <CustomerName>{nameCustomer}</CustomerName>
+        <OrderStatus>
+          <IconMaterial
+            name="clock-time-four-outline"
+            size={15}
+            color={redColor}
+          />
+          <StatusText>Belum Bayar</StatusText>
+        </OrderStatus>
+      </Body>
+      <Action>
+        <View>
+          <Items>{`${qty} Items`}</Items>
+          <Price>{totalPrice}</Price>
+        </View>
+        <ButtonComponent
+          title="Konfirmasi Pembayaran"
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonText}
+          type="primary"
+        />
+      </Action>
+    </Card>
+  );
+};
 
 const Wrapper = styled.View`
   background-color: #efeeee;
