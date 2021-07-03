@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import styled from 'styled-components';
 import {primaryColor, redColor} from '../../constant';
+import {grayColor} from '../../constant';
+import {Switch} from 'react-native-elements';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import ButtonComponent from '../../components/form/Button';
 import {apiGetStandOrder} from '../../services/order';
+import {convertToRupiah} from '../../services/utils/numbering';
 import moment from 'moment';
 
 const styles = StyleSheet.create({
@@ -14,6 +17,31 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 10,
+  },
+  content: {
+    flex: 1,
+    height: '100%',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 32,
+    padding: 15,
+  },
+  textHalo: {
+    fontSize: 18,
+    color: grayColor,
+  },
+  textName: {
+    fontSize: 22,
+    color: grayColor,
+    fontWeight: 'bold',
+  },
+  textOpenStand: {
+    fontSize: 10,
+    color: grayColor,
+    fontWeight: '600',
   },
 });
 
@@ -39,22 +67,39 @@ const ListOrder = () => {
   }, []);
 
   return (
-    <Wrapper>
-      <MainText>Pesanan Masuk</MainText>
-      {!loading &&
-        data?.map(val => {
-          return (
-            <CardComponent
-              key={val?.uuid}
-              nameCustomer={val?.nameCustomer}
-              createdAt={moment(val?.createdAt).format('HH:mm A')}
-              tableNumber={val?.tableNumber}
-              qty={2}
-              totalPrice={val?.totalPrice}
-            />
-          );
-        })}
-    </Wrapper>
+    <View style={styles?.content}>
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.textHalo}>Halo</Text>
+          <Text style={styles.textName}>Iqbal Adam</Text>
+        </View>
+        <View>
+          <Text style={styles.textOpenStand}>Buka Stand</Text>
+          <Switch
+            // onChange={onSwitchNnotification}
+            // value={active}
+            color="#fb770d"
+          />
+        </View>
+      </View>
+      <Wrapper>
+        <MainText>Pesanan Masuk</MainText>
+        {!loading &&
+          data?.map(val => {
+            return (
+              <CardComponent
+                key={val?.uuid}
+                nameCustomer={val?.nameCustomer}
+                createdAt={moment(val?.createdAt).format('HH:mm A')}
+                tableNumber={val?.tableNumber}
+                qty={val?.orderDetails?.length || 0}
+                invoiceId={val?.invoiceId}
+                finalPrice={val?.finalPrice}
+              />
+            );
+          })}
+      </Wrapper>
+    </View>
   );
 };
 
@@ -67,7 +112,7 @@ const CardComponent = ({
   nameCustomer,
   isPaid,
   qty,
-  totalPrice,
+  finalPrice,
 }) => {
   return (
     <Card>
@@ -95,7 +140,7 @@ const CardComponent = ({
       <Action>
         <View>
           <Items>{`${qty} Items`}</Items>
-          <Price>{totalPrice}</Price>
+          <Price>{convertToRupiah(finalPrice)}</Price>
         </View>
         <ButtonComponent
           title="Konfirmasi Pembayaran"
